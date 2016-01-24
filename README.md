@@ -1,6 +1,6 @@
 # SPACERACE EVOLUTION!
 
-With mind altering visual affects comes the critically acclaimed SPACE RACE.  
+With mind altering visual affects comes the critically acclaimed SPACE RACE.
 
   - Watch the environment change as you progress
   - Changing gameplay mechanics
@@ -8,12 +8,12 @@ With mind altering visual affects comes the critically acclaimed SPACE RACE.
 
 Use the SPACEBAR to shoot enemies and ARROWKEYS to move about!
 
-Built on Phaser.js 
+Built on Phaser.js
 With a Ruby on Rails Backend
 
-The game begins very primitive with limited mobility, as you progress through each level you are giving more and more abilities e.g (movement direction). 
+The game begins very primitive with limited mobility, as you progress through each level you are giving more and more abilities e.g (movement direction).
 
-https://space-race-evolution.herokuapp.com/
+https://spacerace-reloaded.herokuapp.com/
 
 # Built by creative genius of Alex , Loretta , Kane and Keshan
 

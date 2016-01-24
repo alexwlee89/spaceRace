@@ -8,101 +8,116 @@
   <link href='https://fonts.googleapis.com/css?family=Orbitron:500' rel='stylesheet' type='text/css'>
 </head>
 <body>
-<div id="container">
-<div class="formContain">
-<button type="button"  data-toggle="modal" data-target=".bs-example-modal-sm">Sign In</button>
-  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <h1>Log in</h1>
+  <div id="container">
+    <div class="formContain">
+      <button type="button"  data-toggle="modal" data-target=".bs-example-modal-sm">Sign In</button>
+      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <h1>Log in</h1>
 
-<%= form_tag sessions_path do %>
-  <p>
-    <%= label_tag :name %><br />
-    <%= text_field_tag :name, params[:name] %>
-  </p>
-  <p>
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </p>
-  <p class="button"><%= submit_tag "Log in" %></p>
-<% end %>
+              <%= form_tag sessions_path do %>
+                <p>
+                  <%= label_tag :name %><br />
+                  <%= text_field_tag :name, params[:name] %>
+                </p>
+                <p>
+                  <%= label_tag :password %><br />
+                  <%= password_field_tag :password %>
+                </p>
+                <p class="button"><%= submit_tag "Log in" %></p>
+              <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div id="saveScore">
+        <button type="button" id="myButton" data-loading-text="Loading..."  autocomplete="off">
+        Save Score!
+        </button>
+
+        <script>
+        var app = app || {}
+
+          var user_id = <%= current_user  ? current_user.id : "null" %>;
+          $('#myButton').one('click', function () {
+
+            $.ajax({
+              url: "/highscores",
+              method: "POST",
+              dataType: "JSON",
+              data: {
+                highscore: {
+                  score: app.score,
+                  user_id: user_id
+                }
+              },
+              success:function(data){
+                console.log(data);
+              }
+            })
+          })
+        </script>
+      </div>
+
+      <div>
+        <form action="/sign_up/" >
+
+          <button >Sign Up</button>
+        </form>
+        <script>
+          var changePage = function (genericScore) {
+            var newURL = "/sign_up";
+            window.location = newURL;
+          };
+
+          $('#container > div.formContain > div:nth-child(4) > form > button').on('click', function(event){
+            event.preventDefault()
+            $.ajax({
+              url: "/generics/" +app.score,
+              method: "PUT",
+              dataType: "JSON",
+              success: function(data){
+                changePage( app.score );
+              }
+            })
+          })
+        </script>
+      </div>
+      <!-- omg -->
+
+
+      <div id="user_nav">
+        <% if current_user %>
+          <%= link_to "Log out", log_out_path %>
+          <% end %>
+          <% if current_user %>
+          <%= current_user.name %>.
+          <%= link_to "Stats", "users/#{current_user.id}" %>
+          <% end %>
+      </div>
+
+      <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" %>
+      <% end %>
+      <%= yield %>
+
+
+      <div class="player-controls">
+        <h1>Controls:</h1>
+          <ul>
+            <li>Up Arrow: Move Up</li>
+            <li>Left Arrow: Move Left</li>
+            <li>Down Arrow: Move Down</li>
+            <li>Right Arrow: Move Right</li>
+            <li>[P]: Pause</li>
+            <li>[M]: Mute</li>
+            <li>[Enter]: Enter next level</li>
+          </ul>
+      </div>
     </div>
+
   </div>
-</div>
-
-<div id="saveScore">
-  <button type="button" id="myButton" data-loading-text="Loading..."  autocomplete="off">
-  Save Score!
-</button>
-
-<script>
-var app = app || {}
-
-  var user_id = <%= current_user  ? current_user.id : "null" %>;
-  $('#myButton').one('click', function () {
-
-    $.ajax({
-      url: "/highscores",
-      method: "POST",
-      dataType: "JSON",
-      data: {
-        highscore: {
-          score: app.score,
-          user_id: user_id
-        }
-      },
-      success:function(data){
-        console.log(data);
-      }
-    })
-  })
-</script>
-</div>
-
-<div>
-<form action="/sign_up/" >
-
-<button >Sign Up</button>
-</form>
-<script>
-  var changePage = function (genericScore) {
-    var newURL = "/sign_up";
-    window.location = newURL;
-  };
-
-  $('#container > div.formContain > div:nth-child(4) > form > button').on('click', function(event){
-    event.preventDefault()
-    $.ajax({
-      url: "/generics/" +app.score,
-      method: "PUT",
-      dataType: "JSON",
-      success: function(data){
-        changePage( app.score ); 
-      }
-    })
-  })
-</script>
-</div>
-<!-- omg -->
-
-
-<div id="user_nav">
-  <% if current_user %>
-    <%= link_to "Log out", log_out_path %>
-    <% end %>
-    <% if current_user %>
-    <%= current_user.name %>.
-    <%= link_to "Stats", "users/#{current_user.id}" %>
-    <% end %>
-</div>
-
-<% flash.each do |name, msg| %>
-  <%= content_tag :div, msg, :id => "flash_#{name}" %>
-<% end %>
-<%= yield %>
-</div>
-</div>
 </body>
 </html>
 

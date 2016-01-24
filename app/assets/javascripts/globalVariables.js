@@ -69,8 +69,12 @@ app.alienShooter;
 app.alienMissileShip;
 app.alienShotgunner;
 
-
 app.alienShotgunnerArray = [];
+
+app.alienSeekerArray = [];
+app.seekerAlien;
+
+app.godMode = false;
 
 
 app.topX = _.random(0, 800);

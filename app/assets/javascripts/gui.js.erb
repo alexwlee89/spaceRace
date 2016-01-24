@@ -8,14 +8,15 @@ var lifeCalculator = function(){
   return livesRemaining;
 }
 
-// Temporary mute
 
-var isMuted = true;
+var isMuted = false;
+
 $(document).ready(function(){
 
-  $('body').on('click','.toggleSound',function(){
+//game.add.tween(text).to( { alpha: 1 }, 2000, "Linear", true);
 
-    if (isMuted === true){
+  $('body').on('click','.toggleSound',function(){
+    if (isMuted) {
       $('.toggleSound').removeClass("userButtonDisable")
       Howler.unmute();
       isMuted = false;
@@ -24,7 +25,65 @@ $(document).ready(function(){
       Howler.mute();
       isMuted = true;
     }
-  })
+  });
+
+  $(document).on("keypress", function (event) {
+    if (event.which === 109) {
+      if (isMuted) {
+        $('.toggleSound').removeClass("userButtonDisable")
+        Howler.unmute();
+        isMuted = false;
+      } else {
+        $('.toggleSound').addClass("userButtonDisable")
+        Howler.mute();
+        isMuted = true;
+      }
+    }
+  });
+
+  $("body").on("click", ".togglePause", function() {
+    if (app.game.paused) {
+      $('.togglePause').removeClass("userButtonDisable");
+      app.stateText.visible = false;
+      app.game.paused = false;
+    } else {
+      $('.togglePause').addClass("userButtonDisable");
+      app.stateText.text = "Paused";
+      app.stateText.visible = true;
+      app.game.paused = true;
+    }
+  });
+
+  $(document).on("keypress", function (event) {
+    if (event.which === 112) {
+      if (app.game.paused) {
+        $('.togglePause').removeClass("userButtonDisable");
+        app.stateText.visible = false;
+        app.game.paused = false;
+      } else {
+        $('.togglePause').addClass("userButtonDisable");
+        app.stateText.text = "Paused";
+        app.stateText.visible = true;
+        app.game.paused = true;
+      }
+    }
+  });
+
+
+  $('button').removeClass("btn btn-primary");
+
+
+
+  //    // --------
+   //      // DIAGNOSTIC WINDOW TEXT.
+   //  setInterval(function(){
+   //   $('.statsWindow').html(
+   //    "Aliens alive: "+app.aliens.countLiving()+
+   //    " Aliens dead: "+app.aliens.countDead()+"</br>"+
+   //    "Level counter: "+app.levelCounter+
+   //    " Total kills: "+app.totalKillCount
+   //    )
+   // }, 500)
 });
 
 // var showStats = true;
@@ -44,21 +103,6 @@ $(document).ready(function(){
 //     }
 //   })
 // });
-
-$(document).ready(function(){
-   //    // --------
-   //      // DIAGNOSTIC WINDOW TEXT.
-   //  setInterval(function(){
-   //   $('.statsWindow').html(
-   //    "Aliens alive: "+app.aliens.countLiving()+
-   //    " Aliens dead: "+app.aliens.countDead()+"</br>"+
-   //    "Level counter: "+app.levelCounter+
-   //    " Total kills: "+app.totalKillCount
-   //    )
-   // }, 500)
-})
-
-$(document).ready(function(){$('button').removeClass("btn btn-primary")})
 
 app.$stylise = function(){
   if (app.levelCounter === 1){
@@ -155,7 +199,7 @@ app.$stylise = function(){
       "background": "-o-linear-gradient(top, rgba(25,3,53,1) 0%, rgba(25,3,53,1) 8%, rgba(27,17,40,1) 23%, rgba(14,3,27,1) 39%, rgba(17,11,25,1) 53%, rgba(16,4,32,1) 65%, rgba(22,14,32,1) 80%, rgba(31,17,50,1) 97%, rgba(31,17,50,1) 100%)",      "background": "-ms-linear-gradient(top, rgba(51,3,51,1) 0%, rgba(51,3,51,1) 8%, rgba(41,17,41,1) 23%, rgba(26,3,26,1) 39%, rgba(26,11,26,1) 53%, rgba(33,4,33,1) 65%, rgba(33,14,33,1) 80%, rgba(48,16,48,1) 97%, rgba(48,16,48,1) 100%)",
       "background": "-ms-linear-gradient(top, rgba(25,3,53,1) 0%, rgba(25,3,53,1) 8%, rgba(27,17,40,1) 23%, rgba(14,3,27,1) 39%, rgba(17,11,25,1) 53%, rgba(16,4,32,1) 65%, rgba(22,14,32,1) 80%, rgba(31,17,50,1) 97%, rgba(31,17,50,1) 100%)",
       "background": "linear-gradient(to bottom, rgba(25,3,53,1) 0%, rgba(25,3,53,1) 8%, rgba(27,17,40,1) 23%, rgba(14,3,27,1) 39%, rgba(17,11,25,1) 53%, rgba(16,4,32,1) 65%, rgba(22,14,32,1) 80%, rgba(31,17,50,1) 97%, rgba(31,17,50,1) 100%)",
-      "filter": "progid:DXImageTransform.Microsoft.gradient( startColorstr='#190335', endColorstr='#1f1132', GradientType=0 )"    
+      "filter": "progid:DXImageTransform.Microsoft.gradient( startColorstr='#190335', endColorstr='#1f1132', GradientType=0 )"
     })
     $('*').css("font-family", "'Orbitron', sans-serif")
     $('.gameStatus').css("border", "3px solid white")

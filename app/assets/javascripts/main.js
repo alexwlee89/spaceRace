@@ -16,7 +16,7 @@ app.toNextLevel = function(createLevel){
 
           if ( app.levelCounter === 1 ) {
             app.stateText.text = " It's dangerous \n  to go alone. \n   Try these: \n     ⍃   ⍄";
-            app.smallStateText.text = "\n\n\n\n\n\n\n\n\n\n\n(Press Space to continue)"
+            app.smallStateText.text = "\n\n\n\n\n\n\n\n\n\n\n(Press Enter to continue)"
             app.smallStateText.visible = true;
             app.stateText.visible = true;
           } else if ( app.levelCounter === 2 ) {
@@ -73,28 +73,7 @@ app.toNextLevel = function(createLevel){
           //the "click to restart" handler
           app.game.time.events.events.pop();
 
-          // app.game.input.onDown.addOnce(createLevel, this)
-
-          app.canFire = false;
-
-          app.fireButton.onDown.addOnce(createLevel, this);
-
-          var checkSpacePress = setInterval(function() {
-
-            //console.log("waiting for space...");
-
-            if (app.fireButton.isDown) {
-              //console.log("space pressed!");
-              clearInterval(checkSpacePress);
-              checkSpacePress = 0;
-
-              setTimeout(function() {
-                app.canFire = true;
-              }, 1000);
-
-            }
-
-          }, 100);
+          app.levelButton.onDown.addOnce(createLevel, this);
 
   }
 
